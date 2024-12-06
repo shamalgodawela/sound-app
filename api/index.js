@@ -8,11 +8,14 @@ import fs from 'fs'; // For managing file system
 import path from 'path'; // For handling file paths
 import { fileURLToPath } from 'url'; // For converting module URL to file path
 import { dirname } from 'path'; // For getting directory name
+import path from 'path';
 
 
 
 
 dotenv.config();
+
+const __dirname1=path.resolve();
 
 const app = express();
 
@@ -71,6 +74,12 @@ app.post('/generate-sound', async (req, res) => {
   
   // Serve the audio files from the 'audio' folder
   app.use('/audio', express.static(path.join(__dirname, 'audio')));
+  app.use(express.static(path.join(__dirname1, '/client/dist')))
+
+  app.get('*', (req,res)=>{
+    res.sendFile(path.join(__dirname1,'client','dist','index.html'));
+
+  })
 
 
   app.post('/generate-animal-sound', async (req, res) => {
